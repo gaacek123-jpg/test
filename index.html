@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Calculator</title>
+<title>XLRS 15 Calculator</title>
 
 <style>
 body {
@@ -11,7 +11,7 @@ body {
   max-width: 420px;
   margin: auto;
 }
-select, input, button {
+select, input {
   width: 100%;
   margin-top: 10px;
   padding: 10px;
@@ -29,12 +29,13 @@ select, input, button {
 
 <h3>XLRS 15 Calculator</h3>
 
-<!-- Item fixed for now -->
-<select id="item" disabled>
-  <option value="XLRS15">XLRS 15</option>
+<!-- Fixed item -->
+<select disabled>
+  <option>XLRS 15</option>
 </select>
 
 <select id="orientation">
+  <option value="">Select orientation</option>
   <option value="15">Horizontal</option>
   <option value="20">Vertical</option>
 </select>
@@ -42,27 +43,32 @@ select, input, button {
 <input type="number" id="v1" placeholder="Value 1">
 <input type="number" id="v2" placeholder="Value 2">
 
-<button onclick="calc()">Calculate</button>
-
-<div class="result" id="out"></div>
+<div class="result" id="out">Enter values to calculate</div>
 
 <script>
-function calc() {
-  const orientationFactor = Number(document.getElementById("orientation").value);
-  const v1 = Number(document.getElementById("v1").value);
-  const v2 = Number(document.getElementById("v2").value);
+const orientationEl = document.getElementById("orientation");
+const v1El = document.getElementById("v1");
+const v2El = document.getElementById("v2");
+const outEl = document.getElementById("out");
 
-  if (isNaN(v1) || isNaN(v2)) {
-    document.getElementById("out").innerText =
-      "Please enter both values";
+function calculate() {
+  const factor = Number(orientationEl.value);
+  const v1 = Number(v1El.value);
+  const v2 = Number(v2El.value);
+
+  if (!factor || isNaN(v1) || isNaN(v2)) {
+    outEl.innerText = "Enter all values to calculate";
     return;
   }
 
-  const result = v1 * v2 * orientationFactor;
-
-  document.getElementById("out").innerText =
-    "Result: " + result.toFixed(2);
+  const result = v1 * v2 * factor;
+  outEl.innerText = "Result: " + result.toFixed(2);
 }
+
+// Auto-calc on every change
+orientationEl.addEventListener("change", calculate);
+v1El.addEventListener("input", calculate);
+v2El.addEventListener("input", calculate);
 </script>
 
 </body>
