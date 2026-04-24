@@ -37,3 +37,39 @@ select, input {
 <select id="orientation">
   <option value="">Select orientation</option>
   <option value="15">Horizontal</option>
+  <option value="20">Vertical</option>
+</select>
+
+<input type="number" id="v1" placeholder="Value 1">
+<input type="number" id="v2" placeholder="Value 2">
+
+<div class="result" id="out">Enter values to calculate</div>
+
+<script>
+const orientationEl = document.getElementById("orientation");
+const v1El = document.getElementById("v1");
+const v2El = document.getElementById("v2");
+const outEl = document.getElementById("out");
+
+function calculate() {
+  const factor = Number(orientationEl.value);
+  const v1 = Number(v1El.value);
+  const v2 = Number(v2El.value);
+
+  if (!factor || isNaN(v1) || isNaN(v2)) {
+    outEl.innerText = "Enter all values to calculate";
+    return;
+  }
+
+  const result = v1 * v2 * factor;
+  outEl.innerText = "Result: " + result.toFixed(2);
+}
+
+// Auto-calc on every change
+orientationEl.addEventListener("change", calculate);
+v1El.addEventListener("input", calculate);
+v2El.addEventListener("input", calculate);
+</script>
+
+</body>
+</html>
