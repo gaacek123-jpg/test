@@ -49,20 +49,21 @@ select, input, button {
 
 <script>
 function calc() {
-  const item = Number(item.value);
-  const orient = Number(orientation.value);
+  const itemValue = Number(document.getElementById("item").value);
+  const orient = Number(document.getElementById("orientation").value);
   const v1 = Number(document.getElementById("v1").value);
   const v2 = Number(document.getElementById("v2").value);
 
   if (!v1 || !v2) {
-    out.innerText = "Please enter both values";
+    document.getElementById("out").innerText = "Please enter both values";
     return;
   }
 
-  const result = v1 * v2 * item * orient;
-  out.innerText = "Result: " + result.toFixed(2);
+  const result = v1 * v2 * itemValue * orient;
+  document.getElementById("out").innerText = "Result: " + result.toFixed(2);
 }
 </script>
 
 </body>
 </html>
+``
