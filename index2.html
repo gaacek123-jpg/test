@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculator</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 420px;
+  margin: auto;
+}
+select, input, button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  font-size: 16px;
+}
+.result {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<h3>Item Calculator</h3>
+
+<select id="item">
+  <option value="1">Item A</option>
+  <option value="1.5">Item B</option>
+  <option value="2">Item C</option>
+</select>
+
+<select id="orientation">
+  <option value="1">Horizontal</option>
+  <option value="1.2">Vertical</option>
+</select>
+
+<input type="number" id="v1" placeholder="Value 1">
+<input type="number" id="v2" placeholder="Value 2">
+
+<button onclick="calc()">Calculate</button>
+
+<div class="result" id="out"></div>
+
+<script>
+function calc() {
+  const itemValue = Number(document.getElementById("item").value);
+  const orient = Number(document.getElementById("orientation").value);
+  const v1 = Number(document.getElementById("v1").value);
+  const v2 = Number(document.getElementById("v2").value);
+
+  if (!v1 || !v2) {
+    document.getElementById("out").innerText = "Please enter both values";
+    return;
+  }
+
+  const result = v1 * v2 * itemValue * orient;
+  document.getElementById("out").innerText = "Result: " + result.toFixed(2);
+}
+</script>
+
+</body>
+</html>
