@@ -27,17 +27,16 @@ select, input, button {
 
 <body>
 
-<h3>Item Calculator</h3>
+<h3>XLRS 15 Calculator</h3>
 
-<select id="item">
-  <option value="1">Item A</option>
-  <option value="1.5">Item B</option>
-  <option value="2">Item C</option>
+<!-- Item fixed for now -->
+<select id="item" disabled>
+  <option value="XLRS15">XLRS 15</option>
 </select>
 
 <select id="orientation">
-  <option value="1">Horizontal</option>
-  <option value="1.2">Vertical</option>
+  <option value="15">Horizontal</option>
+  <option value="20">Vertical</option>
 </select>
 
 <input type="number" id="v1" placeholder="Value 1">
@@ -49,21 +48,22 @@ select, input, button {
 
 <script>
 function calc() {
-  const itemValue = Number(document.getElementById("item").value);
-  const orient = Number(document.getElementById("orientation").value);
+  const orientationFactor = Number(document.getElementById("orientation").value);
   const v1 = Number(document.getElementById("v1").value);
   const v2 = Number(document.getElementById("v2").value);
 
-  if (!v1 || !v2) {
-    document.getElementById("out").innerText = "Please enter both values";
+  if (isNaN(v1) || isNaN(v2)) {
+    document.getElementById("out").innerText =
+      "Please enter both values";
     return;
   }
 
-  const result = v1 * v2 * itemValue * orient;
-  document.getElementById("out").innerText = "Result: " + result.toFixed(2);
+  const result = v1 * v2 * orientationFactor;
+
+  document.getElementById("out").innerText =
+    "Result: " + result.toFixed(2);
 }
 </script>
 
 </body>
 </html>
-``
