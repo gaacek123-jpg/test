@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Calculator</title>
+<title>GuideRailCalculator</title>
 
 <style>
 body {
@@ -28,17 +27,17 @@ select, input, button {
 
 <body>
 
-<h3>Item Calculator</h3>
+<h3>GuideRailCalculator</h3>
 
 <select id="item">
-  <option value="1">Item A</option>
-  <option value="1.5">Item B</option>
-  <option value="2">Item C</option>
+  <option value="A">Item A</option>
+  <option value="B">Item B</option>
+  <option value="C">Item C</option>
 </select>
 
 <select id="orientation">
-  <option value="1">Horizontal</option>
-  <option value="1.2">Vertical</option>
+  <option value="horizontal">Horizontal</option>
+  <option value="vertical">Vertical</option>
 </select>
 
 <input type="number" id="v1" placeholder="Value 1">
@@ -49,9 +48,24 @@ select, input, button {
 <div class="result" id="out"></div>
 
 <script>
+function getConstant(item, orientation) {
+  // Mapa stałych dla każdej kombinacji
+  const constants = {
+    'A-horizontal': 2.5,
+    'A-vertical': 3.0,
+    'B-horizontal': 1.8,
+    'B-vertical': 2.2,
+    'C-horizontal': 4.0,
+    'C-vertical': 5.5
+  };
+  
+  const key = `${item}-${orientation}`;
+  return constants[key] || 1; // domyślnie 1 jeśli nie znaleziono
+}
+
 function calc() {
-  const itemValue = Number(document.getElementById("item").value);
-  const orient = Number(document.getElementById("orientation").value);
+  const item = document.getElementById("item").value;
+  const orientation = document.getElementById("orientation").value;
   const v1 = Number(document.getElementById("v1").value);
   const v2 = Number(document.getElementById("v2").value);
 
@@ -60,7 +74,8 @@ function calc() {
     return;
   }
 
-  const result = v1 * v2 * itemValue * orient;
+  const constant = getConstant(item, orientation);
+  const result = v1 * v2 * constant;
   document.getElementById("out").innerText = "Result: " + result.toFixed(2);
 }
 </script>
