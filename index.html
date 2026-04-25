@@ -7,20 +7,45 @@
 <style>
 body {
   font-family: Arial, sans-serif;
-  padding: 20px;
+  padding: 10px;
   max-width: 420px;
   margin: auto;
+  background-color: #f0f0f0;
 }
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
 select, input, button {
   width: 100%;
-  margin-top: 10px;
   padding: 10px;
   font-size: 16px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
+
+select:focus, input:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
 .result {
   margin-top: 20px;
+  padding: 15px;
+  background-color: white;
+  border-left: 4px solid #4CAF50;
   font-size: 18px;
   font-weight: bold;
+  border-radius: 4px;
+  min-height: 25px;
 }
 </style>
 </head>
@@ -29,30 +54,37 @@ select, input, button {
 
 <h3>GuideRailCalculator</h3>
 
+<label for="item">Banda:</label>
 <select id="item">
-  <option value="A">Item A</option>
+  <option value="XLRS_15">XLRS 15</option>
   <option value="B">Item B</option>
   <option value="C">Item C</option>
 </select>
 
+<label for="orientation">Orientacja gięcia:</label>
 <select id="orientation">
   <option value="horizontal">Horizontal</option>
   <option value="vertical">Vertical</option>
 </select>
 
-<input type="number" id="v1" placeholder="Value 1">
-<input type="number" id="v2" placeholder="Value 2">
+<label for="v1">Promień:</label>
+<input type="number" id="v1" placeholder="Wprowadź promień" oninput="calc()">
 
-<button onclick="calc()">Calculate</button>
+<label for="v2">Długość łuku:</label>
+<input type="number" id="v2" placeholder="Wprowadź długość łuku" oninput="calc()">
 
-<div class="result" id="out"></div>
+<div class="result" id="out">Wynik pojawi się tutaj...</div>
 
 <script>
+// Automatyczne przeliczanie przy zmianie selectów
+document.getElementById("item").addEventListener("change", calc);
+document.getElementById("orientation").addEventListener("change", calc);
+
 function getConstant(item, orientation) {
   // Mapa stałych dla każdej kombinacji
   const constants = {
-    'A-horizontal': 2.5,
-    'A-vertical': 3.0,
+    'XLRS_15-horizontal': 2.5,
+    'XLRS_15-vertical': 3.0,
     'B-horizontal': 1.8,
     'B-vertical': 2.2,
     'C-horizontal': 4.0,
@@ -66,18 +98,30 @@ function getConstant(item, orientation) {
 function calc() {
   const item = document.getElementById("item").value;
   const orientation = document.getElementById("orientation").value;
-  const v1 = Number(document.getElementById("v1").value);
-  const v2 = Number(document.getElementById("v2").value);
+  const v1 = parseFloat(document.getElementById("v1").value);
+  const v2 = parseFloat(document.getElementById("v2").value);
 
-  if (!v1 || !v2) {
-    document.getElementById("out").innerText = "Please enter both values";
+  // Sprawdź czy obie wartości są wprowadzone i są liczbami
+  if (isNaN(v1) || isNaN(v2) || document.getElementById("v1").value === "" || document.getElementById("v2").value === "") {
+    document.getElementById("out").innerHTML = "⚠️ Wprowadź obie wartości";
     return;
   }
 
   const constant = getConstant(item, orientation);
   const result = v1 * v2 * constant;
-  document.getElementById("out").innerText = "Result: " + result.toFixed(2);
+  
+  document.getElementById("out").innerHTML = `
+    ✅ <strong>Wynik:</strong> ${result.toFixed(2)}<br>
+    <small style="color: #666; font-weight: normal;">
+      (${v1} × ${v2} × ${constant} = ${result.toFixed(2)})
+    </small>
+  `;
 }
+
+// Inicjalne wywołanie przy załadowaniu strony
+window.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("out").innerHTML = "Wynik pojawi się tutaj...";
+});
 </script>
 
 </body>
