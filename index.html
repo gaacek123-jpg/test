@@ -10,7 +10,14 @@ body {
   padding: 10px;
   max-width: 420px;
   margin: auto;
-  background-color: #f0f0f0;
+  background-color: #2C2C2C; /* Deep graphite background */
+  color: #E0E0E0; /* Light text for contrast */
+}
+
+h3 {
+  color: #FFFFFF;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 label {
@@ -18,34 +25,50 @@ label {
   margin-top: 10px;
   font-size: 14px;
   font-weight: bold;
-  color: #333;
+  color: #B0B0B0;
 }
 
-select, input, button {
+select, input {
   width: 100%;
   padding: 10px;
   font-size: 16px;
   margin-top: 5px;
   box-sizing: border-box;
-  border: 1px solid #ddd;
+  border: 1px solid #444;
   border-radius: 4px;
+  background-color: #3A3A3A;
+  color: #FFFFFF;
 }
 
 select:focus, input:focus {
   outline: none;
   border-color: #4CAF50;
-  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+select option {
+  background-color: #3A3A3A;
+  color: #FFFFFF;
+}
+
+input::placeholder {
+  color: #888;
 }
 
 .result {
   margin-top: 20px;
   padding: 15px;
-  background-color: white;
+  background-color: #3A3A3A;
   border-left: 4px solid #4CAF50;
   font-size: 18px;
   font-weight: bold;
   border-radius: 4px;
   min-height: 25px;
+  color: #FFFFFF;
+}
+
+.result small {
+  color: #B0B0B0 !important;
 }
 </style>
 </head>
@@ -112,7 +135,7 @@ function calc() {
   
   document.getElementById("out").innerHTML = `
     ✅ <strong>Wynik:</strong> ${result.toFixed(2)}<br>
-    <small style="color: #666; font-weight: normal;">
+    <small>
       (${v1} × ${v2} × ${constant} = ${result.toFixed(2)})
     </small>
   `;
