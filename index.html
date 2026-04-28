@@ -15,39 +15,30 @@ body {
 }
 
 h3 {
-  color: #FFFFFF;
   text-align: center;
-  margin-bottom: 20px;
 }
 
 label {
   display: block;
   margin-top: 10px;
-  font-size: 14px;
   font-weight: bold;
-  color: #B0B0B0;
 }
 
 select, input {
   width: 100%;
   padding: 10px;
-  font-size: 16px;
   margin-top: 5px;
-  box-sizing: border-box;
+  background: #3A3A3A;
+  color: white;
   border: 1px solid #444;
   border-radius: 4px;
-  background-color: #3A3A3A;
-  color: #FFFFFF;
 }
 
 .result {
   margin-top: 20px;
   padding: 15px;
-  background-color: #3A3A3A;
+  background: #3A3A3A;
   border-left: 4px solid #4CAF50;
-  font-size: 16px;
-  border-radius: 4px;
-  color: #FFFFFF;
 }
 </style>
 </head>
@@ -57,52 +48,47 @@ select, input {
 <h3>GuideRailCalculator</h3>
 
 <label>Banda:</label>
-<select id="item">
-  <option value="XLRS_15">XLRS 15</option>
+<select>
+  <option>XLRS 15</option>
 </select>
 
 <label>Orientacja gięcia:</label>
-<select id="orientation">
-  <option value="horizontal">Horizontal</option>
-  <option value="vertical">Vertical</option>
+<select>
+  <option>Horizontal</option>
+  <option>Vertical</option>
 </select>
 
 <label>Promień:</label>
-<input type="number" id="radius" placeholder="Wprowadź promień" oninput="calc()">
+<input type="number" id="r" oninput="calc()">
 
 <label>Długość łuku:</label>
-<input type="number" id="arcLength" placeholder="Wprowadź długość łuku" oninput="calc()">
+<input type="number" id="L" oninput="calc()">
 
 <div class="result" id="out">Wynik pojawi się tutaj...</div>
 
 <script>
 function calc() {
-  const r = parseFloat(document.getElementById("radius").value);
-  const L = parseFloat(document.getElementById("arcLength").value);
+  const r = parseFloat(document.getElementById("r").value);
+  const L = parseFloat(document.getElementById("L").value);
 
-  if (isNaN(r) || isNaN(L)) {
-    document.getElementById("out").innerHTML = "⚠️ Wprowadź wszystkie wartości";
+  if (isNaN(r) || isNaN(L) || r === 0) {
+    document.getElementById("out").innerHTML = "⚠️ Wprowadź poprawne wartości";
     return;
   }
 
-  // B3 = kąt łuku (w stopniach)
-  const angleDeg = L * (180 / Math.PI);
+  // Kąt (stopnie)
+  const angle = (L / r) * (180 / Math.PI);
 
-  // B4 = długość gięcia
-  const bendLength = (L * r) / (r + 15);
+  // Długość gięcia
+  const B4 = (L * r) / (r + 15);
 
-  // wynik końcowy
-  const result = 3996 * (angleDeg * Math.PI / 180) / bendLength;
+  // Wynik końcowy (już uproszczony matematycznie)
+  const result = 3996 * (L / r) / B4;
 
   document.getElementById("out").innerHTML = `
     ✅ <strong>Wynik:</strong> ${result.toFixed(2)}<br><br>
-
-    <strong>Kąt łuku:</strong> ${angleDeg.toFixed(2)}°<br>
-    <strong>Długość gięcia:</strong> ${bendLength.toFixed(2)}<br>
-
-    <small>
-      (3996 × radiany(${angleDeg.toFixed(2)}) / ${bendLength.toFixed(2)})
-    </small>
+    <strong>Kąt łuku:</strong> ${angle.toFixed(2)}°<br>
+    <strong>Długość gięcia:</strong> ${B4.toFixed(2)}
   `;
 }
 </script>
