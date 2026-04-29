@@ -75,15 +75,15 @@ function calc() {
     document.getElementById("out").innerHTML = "⚠️ Wprowadź poprawne wartości";
     return;
   }
-
-  // Kąt (stopnie)
-  const angle = (L / r) * (180 / Math.PI);
-
-  // Długość gięcia
+   // Długość gięcia
   const B4 = (L * r) / (r + 15);
 
+  // Kąt (stopnie)
+  const angle = (B4 / r) * (180 / Math.PI);
+
+
   // Wynik końcowy (już uproszczony matematycznie)
-  const result = 3996 * (L / r) / B4;
+  const result = 3996 * angle / B4;
 
   document.getElementById("out").innerHTML = `
     ✅ <strong>Wynik:</strong> ${result.toFixed(2)}<br><br>
